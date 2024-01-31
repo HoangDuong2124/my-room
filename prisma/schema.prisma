@@ -10,3 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model room {
+  id         String      @id @default(cuid())
+  name       String
+  messengers messenger[]
+}
+
+model user {
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  password   String
+  messengers messenger[]
+}
+
+model messenger {
+  id        Int      @id @default(autoincrement())
+  user      user     @relation(fields: [idUser], references: [id])
+  idUser    Int
+  room      room     @relation(fields: [idRoom], references: [id])
+  idRoom    String
+  messenger String
+  sentAt    DateTime @default(now())
+}
