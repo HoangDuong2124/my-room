@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
-
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import SessionProvider from '@/hocs/session-provider'
 
 export const metadata: Metadata = {
   title: 'Room App',
@@ -14,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className='hehe'>
+        <SessionProvider>{children}</SessionProvider>
+        </div>
+     
+        </body>
     </html>
   )
 }

@@ -1,19 +1,21 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { IRoom, Messenger, sendMess } from '@/interfaces'
+import { IRoom, Messenger, User, groupMess, sendMess } from '@/interfaces'
 import Pusher from 'pusher-js'
 const MessPage = ({ params }: {
     params: { id: string }
 }) => {
+    const { data } = useSession();
     const randomID = Math.floor(Math.random() * 10000)
     const initSend = {
         id: randomID,
         idRoom: "",
         idUser: randomID,
         messenger: "",
-        sentAt: new Date("2024-11-21")
+        sentAt: new Date("2024-11-21"),
     }
     const fetchRoomID = async () => {
         const res = await fetch(`/api/room/${params.id}`, {
@@ -41,7 +43,7 @@ const MessPage = ({ params }: {
 
         }
     }
-    const [messenger, setMessenger] = useState<Messenger[]>([])
+    const [messenger, setMessenger] = useState<groupMess[]>([])
     const [roomID, setRoomID] = useState({
         id: "",
         name: ""
@@ -49,7 +51,7 @@ const MessPage = ({ params }: {
     const [sendMess, setSendMess] = useState<sendMess>(initSend)
     const sendMessenger = async () => {
         try {
-            if(sendMess.messenger&&sendMess.messenger!==""){
+            if (sendMess.messenger && sendMess.messenger !== "") {
                 const data = await fetchSendMess(sendMess)
                 setMessenger(prev => {
                     const updateMess = prev.map((mess) =>
@@ -57,7 +59,7 @@ const MessPage = ({ params }: {
                     )
                     return updateMess
                 })
-                setSendMess({...initSend})
+                setSendMess({ ...initSend })
             }
         } catch (error) {
 
@@ -65,24 +67,24 @@ const MessPage = ({ params }: {
     }
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-          sendMessenger();
+            sendMessenger();
         }
-      }
+    }
     useEffect(() => {
         fetchMess()
         fetchRoomID()
-
         const pusher = new Pusher("d137436b48d8b17e6ea1", {
             cluster: "ap1",
         });
         const channel = pusher.subscribe("chat-room");
-        channel.bind("send-message", (data:any) => {
+        channel.bind("send-message", (data: any) => {
+            console.log(data)
             setMessenger(prev => {
                 return [...prev, data.body]
             })
         });
         return () => {
-        pusher.disconnect()
+            pusher.disconnect()
         }
     }, [])
     return (
@@ -127,8 +129,10 @@ const MessPage = ({ params }: {
             </div>
             {messenger.map((mess) => (
                 <div key={mess.id} >
-                    {mess.idUser === 1 && <div>
-                        <div className='pl-12 text-[12px] opacity-70 '>Nguyễn Tuân</div>
+                    {mess.idUser !== Number(data?.user.id) ? <div>
+                        <div className='pl-12 text-[12px] opacity-70 '>
+                        {mess.user.name}
+                        </div>
                         <div className='flex items-center mb-2' >
                             <Image
                                 src="/img/avatar.jpg"
@@ -144,14 +148,13 @@ const MessPage = ({ params }: {
 
                         </div>
                     </div>
-                    }
-
-                    {mess.idUser === 2 && <div className='flex justify-between mr-3' >
-                        <div></div>
-                        <div className='h-auto w-auto max-w-[65%] mb-[2px]  bg-blue-700 text-white p-[3px] px-[10px] rounded-full'>
-                            {mess.messenger}
+                        :
+                        <div className='flex justify-between mr-3' >
+                            <div></div>
+                            <div className='h-auto w-auto max-w-[65%] mb-[2px]  bg-blue-700 text-white p-[3px] px-[10px] rounded-full'>
+                                {mess.messenger}
+                            </div>
                         </div>
-                    </div>
                     }
 
                 </div>
@@ -168,8 +171,8 @@ const MessPage = ({ params }: {
                             return {
                                 ...prev,
                                 idRoom: params.id,
-                                idUser: 2,
-                                messenger: e.target.value
+                                idUser: Number(data?.user.id),
+                                messenger: e.target.value,
                             }
                         }
                         )}
