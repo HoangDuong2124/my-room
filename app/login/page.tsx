@@ -38,7 +38,7 @@ import React, { use, useState } from "react"
                             text-bold tracking-[1px] uppercase  mb-5 ">
                     Login Room
                 </h1>
-                {/* <form action="/room" method="GET"> */}
+                <form method="POST">
                 <div className=" ">
                     <input
                         className="w-full text-white bg-transparent p-3 mb-3
@@ -84,7 +84,7 @@ import React, { use, useState } from "react"
                     </Link>
                 </div>
 
-                {/* </form> */}
+                </form>
 
             </div>
         </div>

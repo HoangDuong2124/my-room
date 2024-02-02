@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, } from "react"
 import SidebarPage from "./Sidebar"
 import { IRoom, Messenger, User, clickRoom } from "@/interfaces"
 import Pusher from "pusher-js"
@@ -9,8 +9,6 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-
-
 
     const [room, setRoom] = useState<IRoom[]>([])
     const [user, setUser] = useState<User[]>(

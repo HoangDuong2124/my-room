@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 
 export async function GET(req:Request) {
+
     try {
         const res = await prisma.room.findMany()
         return NextResponse.json(res)
