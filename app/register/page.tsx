@@ -50,21 +50,6 @@ const RegisterPage = () => {
        
     }
 
-    // const onSubmit: React.FocusEventHandler<HTMLFormElement> = async (e) => {
-    //     e.preventDefault()
-
-    //     try {
-    //         await fetch('/api/auth/register', {
-    //             method: "POST",
-    //             body: JSON.stringify(registerUser)
-    //         })
-    //         setAlert({ status: 'success', message: 'Signup successfully' })
-    //         setRegisterUser({ ...initUser })
-    //     } catch (error) {
-    //         console.log({ error })
-    //         setAlert({ status: 'error', message: 'Something went wrong' })
-    //     }
-    // }
     return (
 
         <div className="w-full h-[100vh] bg-bg-image bg-cover flex justify-center items-center">

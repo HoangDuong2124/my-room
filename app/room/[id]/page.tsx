@@ -78,7 +78,6 @@ const MessPage = ({ params }: {
         });
         const channel = pusher.subscribe("chat-room");
         channel.bind("send-message", (data: any) => {
-            console.log(data)
             setMessenger(prev => {
                 return [...prev, data.body]
             })
