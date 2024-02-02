@@ -15,7 +15,7 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.SECRET,
+  secret:"9U8hn/PU55oNbc+ZhhWUk+2R1hk5+9YbO8k0+OWgdWI=",
   providers: [
     CredentialsProvider({
       name: "Credentials",
