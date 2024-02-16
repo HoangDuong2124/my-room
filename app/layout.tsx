@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className='hehe'>
+        <div className='w-full'>
         <SessionProvider>{children}</SessionProvider>
         </div>
      

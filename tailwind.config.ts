@@ -13,10 +13,11 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "bg-image" :"url('/img/bg.jpg') " 
+        "bg-image": "url('/img/bg.jpg') ",
+        "bgmess-image": "url('/img/bgmess.jpg') "
       },
-      backgroundColor:{
-        "rgba" :"rgba(171, 119, 157, 0.27)",
+      backgroundColor: {
+        "rgba": "rgba(171, 119, 157, 0.27)",
       },
     },
   },

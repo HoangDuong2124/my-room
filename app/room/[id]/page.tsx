@@ -40,7 +40,7 @@ const MessPage = ({ params }: {
             const result = await send.json()
             return result
         } catch (error) {
-
+           
         }
     }
     const [messenger, setMessenger] = useState<groupMess[]>([])
@@ -87,9 +87,9 @@ const MessPage = ({ params }: {
         }
     }, [])
     return (
-        <div className='w-full  pt-0 relative '>
+        <div className='w-[75%]  pt-0 relative '>
 
-            <div className='flex sticky top-0  bg-white items-center justify-between p-2 border-b shadow z-40 '>
+            <div className='h-[77px] flex sticky top-0  bg-white items-center justify-between p-2 border-b shadow z-40 '>
                 <div className='flex items-center'>
                     <Image
                         src="/img/avatar.jpg"
@@ -101,7 +101,7 @@ const MessPage = ({ params }: {
                         <p className='font-bold text-[15px]'>{roomID.name}</p>
                         <div className='text-[13px] opacity-70'>
                             Đang hoạt động
-                        </div>
+                        </div>                                                                                                                                                                                                                                                                                                                                          
                     </div>
                 </div>
 
@@ -126,6 +126,7 @@ const MessPage = ({ params }: {
                     </button>
                 </div>
             </div>
+            <div className='h-[calc(100vh-125px)] overflow-y-auto '>
             {messenger.map((mess) => (
                 <div key={mess.id} >
                     {mess.idUser !== Number(data?.user.id) ? <div>
@@ -133,7 +134,7 @@ const MessPage = ({ params }: {
                         {mess.user.name}
                         </div>
                         <div className='flex items-center mb-2' >
-                            <Image
+                            <Image className='rounded-[50%] '
                                 src="/img/avatar.jpg"
                                 width={45}
                                 height={50}
@@ -148,7 +149,7 @@ const MessPage = ({ params }: {
                         </div>
                     </div>
                         :
-                        <div className='flex justify-between mr-3' >
+                        <div className='flex justify-between mr-3 ' >
                             <div></div>
                             <div className='h-auto w-auto max-w-[65%] mb-[2px]  bg-blue-700 text-white p-[3px] px-[10px] rounded-full'>
                                 {mess.messenger}
@@ -159,8 +160,9 @@ const MessPage = ({ params }: {
                 </div>
             )
             )}
-            <div className='w-full flex items-center justify-center absolute bottom-2  '>
-                <div>
+            </div>
+           
+            <div className='w-[75%] h-[48px] fixed bottom-0  bg-white py-2 flex justify-center  '>
                     <input
                         className='w-[220px] h-8 border rounded-full outline-blue-500 pl-3 focus:w-[320px] transition-all duration-300'
                         placeholder='Nhập tin nhắn'
@@ -182,7 +184,6 @@ const MessPage = ({ params }: {
                     >
                         Gửi
                     </button>
-                </div>
             </div>
         </div>
 

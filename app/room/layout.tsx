@@ -39,7 +39,7 @@ export default function RootLayout({
      },[])
     return (
         <>
-            <div className="flex">
+            <div className="flex w-full">
                 <SidebarPage
                     room={room}
                     setRoom={setRoom}
