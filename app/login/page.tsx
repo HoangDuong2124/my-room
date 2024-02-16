@@ -1,35 +1,30 @@
 "use client"
 import Link from "next/link"
-import React, { use, useState } from "react"
+import React, { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
  const LoginPage = () => {
-    const initUser = {
-        email: "",
-        password: ""
-    }
-    const [user, setUser] = useState<
-        {
-            email: string
-            password: string
-        }
-    >(initUser)
-    const fetchLogin = async (data: {
-        email: string
-        password: string
-    }) => {
-        const res = await fetch("/api/login", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'API-Key': process.env.DATA_API_KEY!,
-            },
-            body: JSON.stringify(data)
-        })
-        const result = await res.json()
-        return result
-    }
-    const submit = () => {
-      fetchLogin(user)
-    }
+    const router = useRouter()
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+
+    const handleLogin = async (e:any) => {
+      e.preventDefault();
+  
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+  
+      if (result?.error) {
+        console.error('Đăng nhập không thành công:', result.error);
+      } else {
+        router.push("/");
+      }
+    };
+  
+    
     return (
 
         <div className="w-full h-[100vh] bg-bg-image bg-cover flex justify-center items-center">
@@ -38,21 +33,14 @@ import React, { use, useState } from "react"
                             text-bold tracking-[1px] uppercase  mb-5 ">
                     Login Room
                 </h1>
-                <form method="POST">
+                <form onSubmit={handleLogin}>
                 <div className=" ">
                     <input
                         className="w-full text-white bg-transparent p-3 mb-3
                          border border-white outline-0 placeholder:text-white"
                         type="email"
                         placeholder="Nhập email" required
-                        onChange={e => setUser((prev) => {
-                            return {
-                                ...prev,
-                                email: e.target.value
-                            }
-                        })
-
-                        }
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
                 <div className=" ">
@@ -61,18 +49,12 @@ import React, { use, useState } from "react"
                          border border-white outline-0 placeholder:text-white"
                         type="password"
                         placeholder="Nhập password" required
-                        onChange={e => setUser((prev) => {
-                            return {
-                                ...prev,
-                                password: e.target.value
-                            }
-                        })}
+                        onChange={e =>setPassword(e.target.value)}
                     />
                 </div>
                 <div className="flex items-center justify-between">
                     <button className="p-2 bg-[#f0bcb4] text-white hover:bg-[#8b5c7e] transition-all duration-500"
-
-                        onClick={submit}
+                    type="submit"
                     >
                         Đăng nhập
                     </button>
