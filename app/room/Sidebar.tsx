@@ -57,7 +57,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
         setShowAdd(!showAdd)
     }
     const addRoom = () => {
-        if (!adRoom && adRoom !== "") {
+        if (adRoom.name && adRoom.name !== "") {
             setRoom(prev => {
                 return [...prev, adRoom]
             })

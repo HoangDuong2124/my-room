@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation"
       if (result?.error) {
         console.error('Đăng nhập không thành công:', result.error);
       } else {
-        router.push("/");
+        router.push("/room");
       }
     };
   
