@@ -32,13 +32,13 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
 
         }
     }
-    const fetchRoomID = async () => {
-        const res = await fetch(`/api/room/${searchRoom}`, {
+    const fetchRoomName = async () => {
+        const res = await fetch(`/api/roomSearch/${searchRoom}`, {
             method: "GET"
         })
         const data = await res.json()
         if (!data) {
-            alert("ID Room: " + searchRoom + " không tồn tại")
+            alert("Name Room: " + searchRoom + " không tồn tại")
         }
         else {
             setShowSearch(true)
@@ -52,12 +52,12 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
     const [showSearch, setShowSearch] = useState(false)
     const [adRoom, setAddRoom] = useState<IRoom>(initAdRoom)
     const [searchRoom, setSearchRoom] = useState("")
-    const [roomSearch, setRoomSearch] = useState(initRoomSearch)
+    const [roomSearch, setRoomSearch] = useState<IRoom[]>([])
     const showAddRoom = () => {
         setShowAdd(!showAdd)
     }
     const addRoom = () => {
-        if (adRoom.name && adRoom.name !== "") {
+        if (adRoom.name && adRoom.name.trim() !== "") {
             setRoom(prev => {
                 return [...prev, adRoom]
             })
@@ -68,7 +68,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
     }
     const search = async () => {
         if (searchRoom && searchRoom !== "") {
-            await fetchRoomID()
+            await fetchRoomName()
         }
     }
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -120,7 +120,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                     <input
                         className='w-full outline-0 placeholder:text-xs pl-2'
                         type="text"
-                        placeholder='Tìm ID room'
+                        placeholder='Tìm tên room'
                         value={searchRoom}
                         onChange={e => setSearchRoom(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -153,9 +153,10 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                     </button>
                 </div>
                 }
-                <div className='w-full'>
+                <div className='w-full h-[calc(100vh-125px)] overflow-y-auto'>
 
-                    {showSearch ? <div className='p-2 hover:bg-[Gainsboro]'>
+                    {showSearch ?  roomSearch.map(roomSearch=>(
+                        <div key={roomSearch.id} className='p-2 hover:bg-[Gainsboro]'>
                         <Link
                             href={`/room/${roomSearch.id}`}
                             className='flex items-center w-full '
@@ -171,6 +172,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                             <p className='truncate'>{roomSearch.name}</p>
                         </Link>
                     </div>
+                    ))
                         : <>
                             {room.map((item) => (
                                 <RoomItem key={item.id}
