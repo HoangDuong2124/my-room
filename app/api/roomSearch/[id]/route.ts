@@ -5,9 +5,12 @@ export async function GET(req:Request ,{params}:{
     params:{id:string}
 }) {
     try {
-        const getRoomID = await prisma.room.findUnique({
+        const getRoomID = await prisma.room.findMany({
             where:{
-             id:params.id
+               name:{
+                contains:params.id.trim(),
+                mode: "insensitive"
+               }
             }
           })
         return NextResponse.json(getRoomID)
