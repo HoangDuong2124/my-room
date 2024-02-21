@@ -16,9 +16,12 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
         id: randomID(),
         name: ""
     }
-    const initRoomSearch = {
-        id: "",
-        name: ""
+    const fetchRoom = async () =>{
+        const res = await fetch("/api/room",{
+            method:"GET"
+        })
+        const data = await res.json()
+        setRoom(data)
     }
     const fetchAddRoom = async (data: IRoom) => {
         try {
@@ -32,27 +35,17 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
 
         }
     }
-    const fetchRoomName = async () => {
-        const res = await fetch(`/api/roomSearch/${searchRoom}`, {
+    const fetchRoomName = async (string: string) => {
+        const res = await fetch(`/api/roomSearch/${string}`, {
             method: "GET"
         })
         const data = await res.json()
-        if (!data) {
-            alert("Name Room: " + searchRoom + " không tồn tại")
-        }
-        else {
-            setShowSearch(true)
-            setRoomSearch(data)
-            setSearchRoom("")
-        }
-
+            setRoom(data)
     }
 
     const [showAdd, setShowAdd] = useState(false)
-    const [showSearch, setShowSearch] = useState(false)
     const [adRoom, setAddRoom] = useState<IRoom>(initAdRoom)
     const [searchRoom, setSearchRoom] = useState("")
-    const [roomSearch, setRoomSearch] = useState<IRoom[]>([])
     const showAddRoom = () => {
         setShowAdd(!showAdd)
     }
@@ -66,21 +59,22 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
             setShowAdd(false)
         }
     }
-    const search = async () => {
-        if (searchRoom && searchRoom !== "") {
-            await fetchRoomName()
+    const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const searchNew = event.target.value
+        if(searchNew===""){
+            await fetchRoom()
+        }
+        else{
+            await fetchRoomName(searchNew)
         }
     }
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            search();
-        }
-    }
+
     const checkSignout = () => {
         if (confirm("Bạn chắc chắn muốn đăng xuất") === true) {
             signOut()
         }
         return false
+        
     }
     return (
         <>
@@ -110,7 +104,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                 </div>
                 <div className='w-full flex items-center justify-between border-b p-1' >
                     <button
-                        onClick={search}
+
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                             <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
@@ -121,9 +115,8 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                         className='w-full outline-0 placeholder:text-xs pl-2'
                         type="text"
                         placeholder='Tìm tên room'
-                        value={searchRoom}
-                        onChange={e => setSearchRoom(e.target.value)}
-                        onKeyDown={handleKeyDown}
+                        onChange={handleSearch}
+                    // onKeyDown={handleKeyDown}
                     />
                 </div>
                 <div className='h-[30px] border-b'>
@@ -154,33 +147,10 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
                 </div>
                 }
                 <div className='w-full h-[calc(100vh-125px)] overflow-y-auto'>
-
-                    {showSearch ?  roomSearch.map(roomSearch=>(
-                        <div key={roomSearch.id} className='p-2 hover:bg-[Gainsboro]'>
-                        <Link
-                            href={`/room/${roomSearch.id}`}
-                            className='flex items-center w-full '
-                        >
-                            <Image
-                                className=' rounded-full mr-1'
-                                src="/img/avatar.jpg"
-                                width={40}
-                                height={50}
-                                alt="Avartar default"
-                            />
-
-                            <p className='truncate'>{roomSearch.name}</p>
-                        </Link>
-                    </div>
+                    {room.map((item) => (
+                        <RoomItem key={item.id}
+                            name={item} />
                     ))
-                        : <>
-                            {room.map((item) => (
-                                <RoomItem key={item.id}
-                                    name={item} />
-                            ))
-                            }
-                        </>
-
                     }
                 </div>
             </div>

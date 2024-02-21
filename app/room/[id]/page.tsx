@@ -40,7 +40,7 @@ const MessPage = ({ params }: {
             const result = await send.json()
             return result
         } catch (error) {
-           
+
         }
     }
     const [messenger, setMessenger] = useState<groupMess[]>([])
@@ -65,6 +65,15 @@ const MessPage = ({ params }: {
 
         }
     }
+
+    // [{
+    //     sentAt: '1/1'
+    // },
+    // {
+    //     sentAt: '1/1'
+    // }
+    // ].map(item => new Date(item.sentAt).getTime()).sort((a,b) => a>b)
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             sendMessenger();
@@ -78,9 +87,12 @@ const MessPage = ({ params }: {
         });
         const channel = pusher.subscribe("chat-room");
         channel.bind("send-message", (data: any) => {
-            setMessenger(prev => {
-                return [...prev, data.body]
-            })
+            if (data.body.idRoom === params.id) {
+                setMessenger(prev => {
+                    return [...prev, data.body]
+                })
+            }
+
         });
         return () => {
             pusher.disconnect()
@@ -101,7 +113,7 @@ const MessPage = ({ params }: {
                         <p className='font-bold text-[15px]'>{roomID.name}</p>
                         <div className='text-[13px] opacity-70'>
                             Đang hoạt động
-                        </div>                                                                                                                                                                                                                                                                                                                                          
+                        </div>
                     </div>
                 </div>
 
@@ -127,63 +139,63 @@ const MessPage = ({ params }: {
                 </div>
             </div>
             <div className='h-[calc(100vh-125px)] overflow-y-auto '>
-            {messenger.map((mess) => (
-                <div key={mess.id} >
-                    {mess.idUser !== Number(data?.user.id) ? <div>
-                        <div className='pl-12 text-[12px] opacity-70 '>
-                        {mess.user.name}
+                {messenger.map((mess) => (
+                    <div key={mess.id} >
+                        {mess.idUser !== Number(data?.user.id) ? <div>
+                            <div className='pl-12 text-[12px] opacity-70 '>
+                                {mess.user.name}
+                            </div>
+                            <div className='flex items-center mb-2' >
+                                <Image className='rounded-[50%] '
+                                    src="/img/avatar.jpg"
+                                    width={45}
+                                    height={50}
+                                    alt="Avartar default"
+                                />
+                                <div>
+                                    <div className='h-auto w-auto  bg-slate-300 text-black p-[3px] px-[10px]  rounded-full'>
+                                        {mess.messenger}
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                        <div className='flex items-center mb-2' >
-                            <Image className='rounded-[50%] '
-                                src="/img/avatar.jpg"
-                                width={45}
-                                height={50}
-                                alt="Avartar default"
-                            />
-                            <div>
-                                <div className='h-auto w-auto  bg-slate-300 text-black p-[3px] px-[10px]  rounded-full'>
+                            :
+                            <div className='flex justify-between mr-3 ' >
+                                <div></div>
+                                <div className='h-auto w-auto max-w-[65%] mb-[2px]  bg-blue-700 text-white p-[3px] px-[10px] rounded-full'>
                                     {mess.messenger}
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-                        :
-                        <div className='flex justify-between mr-3 ' >
-                            <div></div>
-                            <div className='h-auto w-auto max-w-[65%] mb-[2px]  bg-blue-700 text-white p-[3px] px-[10px] rounded-full'>
-                                {mess.messenger}
-                            </div>
-                        </div>
-                    }
-
-                </div>
-            )
-            )}
-            </div>
-           
-            <div className='w-[75%] h-[48px] fixed bottom-0  bg-white py-2 flex justify-center  '>
-                    <input
-                        className='w-[220px] h-8 border rounded-full outline-blue-500 pl-3 focus:w-[320px] transition-all duration-300'
-                        placeholder='Nhập tin nhắn'
-                        value={sendMess.messenger}
-                        onKeyDown={handleKeyDown}
-                        onChange={e => setSendMess(prev => {
-                            return {
-                                ...prev,
-                                idRoom: params.id,
-                                idUser: Number(data?.user.id),
-                                messenger: e.target.value,
-                            }
                         }
-                        )}
-                    />
-                    <button
-                        className='w-20 h-8 border rounded-lg bg-red-500 text-white hover:bg-red-700 transition-all duration-300'
-                        onClick={sendMessenger}
-                    >
-                        Gửi
-                    </button>
+
+                    </div>
+                )
+                )}
+            </div>
+
+            <div className='w-[75%] h-[48px] fixed bottom-0  bg-white py-2 flex justify-center  '>
+                <input
+                    className='w-[220px] h-8 border rounded-full outline-blue-500 pl-3 focus:w-[320px] transition-all duration-300'
+                    placeholder='Nhập tin nhắn'
+                    value={sendMess.messenger}
+                    onKeyDown={handleKeyDown}
+                    onChange={e => setSendMess(prev => {
+                        return {
+                            ...prev,
+                            idRoom: params.id,
+                            idUser: Number(data?.user.id),
+                            messenger: e.target.value,
+                        }
+                    }
+                    )}
+                />
+                <button
+                    className='w-20 h-8 border rounded-lg bg-red-500 text-white hover:bg-red-700 transition-all duration-300'
+                    onClick={sendMessenger}
+                >
+                    Gửi
+                </button>
             </div>
         </div>
 

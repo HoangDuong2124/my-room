@@ -4,6 +4,7 @@ import { room } from '@prisma/client'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Messenger } from '@/interfaces'
+import Pusher from 'pusher-js'
 interface IRoom {
     name: room
 }
@@ -16,8 +17,20 @@ const RoomItem = ({ name }: IRoom) => {
         setNewMess(data)
     }
     const [newMess, setNewMess] = useState<Messenger>()
-    useEffect(() => {
+    useEffect( () => {
         fetchMess()
+        const pusher = new Pusher("d137436b48d8b17e6ea1", {
+            cluster: "ap1",
+        });
+        const channel = pusher.subscribe("chat-room");
+        channel.bind("send-message", (data: any) => {
+            if(data.body.idRoom===name.id){
+                setNewMess(data.body)
+            }
+        });
+        return () => {
+            pusher.disconnect()
+        }
     }, [])
     return (
         <div className=' p-2 hover:bg-[Gainsboro]'>
