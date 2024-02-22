@@ -32,4 +32,5 @@ model messenger {
   idRoom    String
   messenger String
   sentAt    DateTime @default(now())
+  viewedBy  String[]
 }
