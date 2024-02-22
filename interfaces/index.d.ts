@@ -21,6 +21,7 @@ export interface Messenger {
     idRoom: string
     messenger: string
     sentAt: Date
+    viewedBy:string[]
 }
 export interface sendMess {
     id: number
@@ -28,6 +29,7 @@ export interface sendMess {
     idRoom: string
     messenger: string
     sentAt: Date
+    viewedBy:string
 }
 export interface clickRoom {
     id: string

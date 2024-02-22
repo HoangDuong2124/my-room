@@ -10,6 +10,7 @@ export async function POST(req: Request) {
                 idUser: body.idUser,
                 idRoom: body.idRoom,
                 messenger: body.messenger,
+                viewedBy:[body.viewedBy],
             },
             include: {
                 user: {
