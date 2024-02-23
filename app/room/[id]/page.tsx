@@ -122,9 +122,9 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     fetchRoomID();
   }, []);
 
-  useEffect(() => {
-    fetchUpdateViewMess();
-  }, [pathName]);
+  // useEffect(() => {
+  //   fetchUpdateViewMess();
+  // }, [pathName]);
 
   return (
     <div className="w-[75%]  pt-0 relative ">
