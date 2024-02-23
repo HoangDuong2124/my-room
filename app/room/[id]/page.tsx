@@ -21,19 +21,29 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     viewedBy: String(data?.user.id),
   };
   const fetchRoomID = async () => {
-    const res = await fetch(`/api/room/${params.id}`, {
-      method: "GET",
-    });
-    const data = await res.json();
-    setRoomID(data);
+    try {
+      const res = await fetch(`/api/room/${params.id}`, {
+        method: "GET",
+      });
+      const data = await res.json();
+      setRoomID(data);
+    } catch (error) {
+      
+    }
+    
   };
 
   const fetchAllMess = async () => {
-    const res = await fetch(`/api/mess/${params.id}`, {
-      method: "GET",
-    });
-    const data = await res.json();
-    setMessenger(data);
+    try {
+      const res = await fetch(`/api/mess/${params.id}`, {
+        method: "GET",
+      });
+      const data = await res.json();
+      setMessenger(data);
+    } catch (error) {
+      
+    }
+   
   };
 
   const fetchSendMess = async (data: sendMess) => {
@@ -49,10 +59,15 @@ const MessPage = ({ params }: { params: { id: string } }) => {
   };
 
   const fetchUpdateViewMess = async () => {
-    const res = await fetch(`/api/mess/${lastPathName}`, {
-      method: "PUT",
-      body: String(data?.user.id),
-    });
+    try {
+      const res = await fetch(`/api/mess/${lastPathName}`, {
+        method: "PUT",
+        body: String(data?.user.id),
+      });
+    } catch (error) {
+      
+    }
+  
   };
 
   const [messenger, setMessenger] = useState<groupMess[]>([]);
@@ -99,7 +114,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     return () => {
       pusher.disconnect();
     };
-  }, []);
+  }, [params.id]);
 
 
   useEffect(() => {

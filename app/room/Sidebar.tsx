@@ -17,11 +17,16 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
         name: ""
     }
     const fetchRoom = async () =>{
-        const res = await fetch("/api/room",{
-            method:"GET"
-        })
-        const data = await res.json()
-        setRoom(data)
+        try {
+            const res = await fetch("/api/room",{
+                method:"GET"
+            })
+            const data = await res.json()
+            setRoom(data)
+        } catch (error) {
+            
+        }
+        
     }
     const fetchAddRoom = async (data: IRoom) => {
         try {
@@ -36,11 +41,16 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
         }
     }
     const fetchRoomName = async (string: string) => {
-        const res = await fetch(`/api/roomSearch/${string}`, {
-            method: "GET"
-        })
-        const data = await res.json()
-            setRoom(data)
+        try {
+            const res = await fetch(`/api/roomSearch/${string}`, {
+                method: "GET"
+            })
+            const data = await res.json()
+                setRoom(data)
+        } catch (error) {
+            
+        }
+        
     }
 
     const [showAdd, setShowAdd] = useState(false)

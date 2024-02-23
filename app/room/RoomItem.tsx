@@ -17,11 +17,16 @@ const RoomItem = ({ name }: IRoom) => {
   const [newMess, setNewMess] = useState<Messenger>();
 
   const fetchNewMess = async () => {
-    const res = await fetch(`/api/newMess/${name.id}`, {
-      method: "GET",
-    });
-    const data = await res.json();
-    setNewMess(data);
+    try {
+      const res = await fetch(`/api/newMess/${name.id}`, {
+        method: "GET",
+      });
+      const data = await res.json();
+      setNewMess(data);
+    } catch (error) {
+      
+    }
+  
   };
   
   useEffect(() => {
@@ -37,7 +42,7 @@ const RoomItem = ({ name }: IRoom) => {
     return () => {
       pusher.disconnect();
     };
-  }, []);
+  }, [name.id]);
 
   useEffect(() => {
     fetchNewMess();

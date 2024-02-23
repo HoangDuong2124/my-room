@@ -28,11 +28,16 @@ export default function RootLayout({
         ]
     )
     const fetchRoom = async () =>{
-        const res = await fetch("/api/room",{
-            method:"GET"
-        })
-        const data = await res.json()
-        setRoom(data)
+        try {
+            const res = await fetch("/api/room",{
+                method:"GET"
+            })
+            const data = await res.json()
+            setRoom(data)
+        } catch (error) {
+            
+        }
+       
     }
      useEffect(()=>{
         fetchRoom()
