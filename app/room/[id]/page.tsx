@@ -51,7 +51,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
   const fetchUpdateViewMess = async () => {
     const res = await fetch(`/api/mess/${lastPathName}`, {
       method: "PUT",
-      body: data?.user.id,
+      body: String(data?.user.id),
     });
   };
 
