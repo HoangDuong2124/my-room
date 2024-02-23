@@ -57,17 +57,16 @@ const RoomItem = ({ name }: IRoom) => {
         />
         <div>
           <p className="truncate">{name.name}</p>
-          {newMess!== null && (
+      
             <p
               className={
-                newMess?.viewedBy.includes(userID)
+                newMess?.viewedBy?.includes(userID)
                   ? "text-[13px] opacity-[0.65] truncate"
                   : "text-[13px] truncate font-bold "
               }
             >
               {newMess?.messenger}
             </p>
-          )}
         </div>
       </Link>
     </div>
