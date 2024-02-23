@@ -44,17 +44,19 @@ export async function PUT(
       where: { idRoom: params.id },
     });
     for (const message of messagesInRoom) {
-      if (!message.viewedBy.includes(JSON.stringify(body))) {
-       const updateViewMess =  await prisma.messenger.update({
-          where: { id: message.id },
-          data: { viewedBy: { push: JSON.stringify(body) } },
-        });
-        return NextResponse.json(updateViewMess)
+      if (message!== null) {
+        if (!message.viewedBy.includes(JSON.stringify(body))) {
+          const updateViewMess = await prisma.messenger.update({
+            where: { id: message.id },
+            data: { viewedBy: { push: JSON.stringify(body) } },
+          });
+          return NextResponse.json(updateViewMess);
+        }
       }
     }
-    return NextResponse.json(messagesInRoom)
+    return NextResponse.json(messagesInRoom);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ message: "Failed" }, { status: 400 });
   }
 }
