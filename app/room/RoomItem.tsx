@@ -13,7 +13,7 @@ interface IRoom {
 const RoomItem = ({ name }: IRoom) => {
   const { data } = useSession();
   const pathName = usePathname();
-  const userID =String(data?.user.id) ;
+  const userID = String(data?.user.id);
   const [newMess, setNewMess] = useState<Messenger>();
 
   const fetchNewMess = async () => {
@@ -23,12 +23,9 @@ const RoomItem = ({ name }: IRoom) => {
       });
       const data = await res.json();
       setNewMess(data);
-    } catch (error) {
-      
-    }
-  
+    } catch (error) {}
   };
-  
+
   useEffect(() => {
     const pusher = new Pusher("d137436b48d8b17e6ea1", {
       cluster: "ap1",
@@ -60,15 +57,17 @@ const RoomItem = ({ name }: IRoom) => {
         />
         <div>
           <p className="truncate">{name.name}</p>
-          <p
-            className={
-              newMess?.viewedBy.includes(userID)
-                ? "text-[13px] opacity-[0.65] truncate"
-                : "text-[13px] truncate font-bold "
-            }
-          >
-            {newMess?.messenger}
-          </p>
+          {newMess && (
+            <p
+              className={
+                newMess?.viewedBy.includes(userID)
+                  ? "text-[13px] opacity-[0.65] truncate"
+                  : "text-[13px] truncate font-bold "
+              }
+            >
+              {newMess?.messenger}
+            </p>
+          )}
         </div>
       </Link>
     </div>
