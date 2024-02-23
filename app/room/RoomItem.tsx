@@ -7,6 +7,7 @@ import { Messenger } from "@/interfaces";
 import Pusher from "pusher-js";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { fetchJSON } from "@/lib/fetchUrl";
 interface IRoom {
   name: room;
 }
@@ -18,11 +19,10 @@ const RoomItem = ({ name }: IRoom) => {
 
   const fetchNewMess = async () => {
     try {
-      const res = await fetch(`/api/newMess/${name.id}`, {
+      const res = await fetchJSON(`/api/newMess/${name.id}`, {
         method: "GET",
-      });
-      const data = await res.json();
-      setNewMess(data);
+      }); 
+      setNewMess(res);
     } catch (error) {}
   };
 

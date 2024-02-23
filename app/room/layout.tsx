@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SidebarPage from "./Sidebar";
 import { IRoom, Messenger, User, clickRoom } from "@/interfaces";
 import Pusher from "pusher-js";
+import { fetchJSON } from "@/lib/fetchUrl";
 
 export default function RootLayout({
   children,
@@ -26,13 +27,13 @@ export default function RootLayout({
   ]);
   const fetchRoom = async () => {
     try {
-      const res = await fetch("/api/room", {
+      const res = await fetchJSON("/api/room", {
         method: "GET",
       });
-      const data = await res.json();
-
-      if (data) setRoom(data);
-    } catch (error) {}
+    
+       setRoom(res);
+    } catch (error) {
+    }
   };
   useEffect(() => {
     fetchRoom();

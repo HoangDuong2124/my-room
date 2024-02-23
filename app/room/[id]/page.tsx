@@ -121,6 +121,10 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     fetchAllMess();
     fetchRoomID();
   }, []);
+    const scroll = document.querySelector(".chat-scroll")
+    if(scroll){
+      scroll.scrollTop = scroll.scrollHeight
+    }
 
   // useEffect(() => {
   //   fetchUpdateViewMess();
@@ -181,7 +185,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
           </button>
         </div>
       </div>
-      <div className="h-[calc(100vh-125px)] overflow-y-auto ">
+      <div className="chat-scroll h-[calc(100vh-125px)] overflow-y-auto ">
         {messenger.map((mess) => (
           <div key={mess.id}>
             {mess.idUser !== Number(data?.user.id) ? (
