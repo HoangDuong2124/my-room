@@ -39,7 +39,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
         method: "GET",
       });
       const data = await res.json();
-      setMessenger(data);
+     if(data) setMessenger(data);
     } catch (error) {
       
     }
