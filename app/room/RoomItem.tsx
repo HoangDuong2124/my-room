@@ -57,7 +57,7 @@ const RoomItem = ({ name }: IRoom) => {
         />
         <div>
           <p className="truncate">{name.name}</p>
-          {newMess && (
+          {newMess!== null && (
             <p
               className={
                 newMess?.viewedBy.includes(userID)
