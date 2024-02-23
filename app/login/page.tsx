@@ -1,10 +1,18 @@
 "use client"
 import Link from "next/link"
-import React, { useState } from "react"
-import { signIn } from "next-auth/react"
+import React, { useEffect, useState } from "react"
+import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
  const LoginPage = () => {
+    const {data} = useSession()
     const router = useRouter()
+    useEffect(() => {
+      if (data) {
+        router.push("/room");
+      }
+  
+    }, [data]);
+
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
 

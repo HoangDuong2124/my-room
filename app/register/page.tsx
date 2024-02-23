@@ -1,10 +1,20 @@
 "use client"
-import React, { use, useState } from "react"
+import React, { use, useEffect, useState } from "react"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 interface IRegister {
 
 }
 const RegisterPage = () => {
+    const {data} = useSession()
+    const router = useRouter()
+    useEffect(() => {
+      if (data) {
+        router.push("/room");
+      }
+  
+    }, [data]);
     const randomID = () => { return Math.random().toString(36).slice(2) }
     const initUser = {
         id: randomID(),

@@ -13,7 +13,7 @@ interface IRoom {
 const RoomItem = ({ name }: IRoom) => {
   const { data } = useSession();
   const pathName = usePathname();
-  const userID = data?.user.id;
+  const userID =String(data?.user.id) ;
   const [newMess, setNewMess] = useState<Messenger>();
 
   const fetchNewMess = async () => {
@@ -57,7 +57,7 @@ const RoomItem = ({ name }: IRoom) => {
           <p className="truncate">{name.name}</p>
           <p
             className={
-              newMess?.viewedBy.includes(userID!)
+              newMess?.viewedBy.includes(userID)
                 ? "text-[13px] opacity-[0.65] truncate"
                 : "text-[13px] truncate font-bold "
             }

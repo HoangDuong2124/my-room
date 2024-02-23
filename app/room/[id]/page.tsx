@@ -101,17 +101,6 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     };
   }, []);
 
-//   useEffect(() => {
-//     var pusher = new Pusher("d137436b48d8b17e6ea1", {
-//       cluster: "ap1",
-//     });
-//     var presenceChannel = pusher.subscribe("presence-example");
-//     presenceChannel.bind("pusher:subscription_succeeded", function () {
-//       var me = presenceChannel.members.me;
-//       var userId = me.id;
-//       var userInfo = me.info;
-//     });
-//   }, []);
 
   useEffect(() => {
     fetchAllMess();
