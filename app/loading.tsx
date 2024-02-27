@@ -1,21 +1,19 @@
 import { useSession } from "next-auth/react";
 
- const Loading = () => {
-    // const { data } = useSession();
-    // if (data) return children;
-    return (
-      <div className=" w-screen h-screen bg-slate-100 flex items-center justify-center">
-        <div className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+const Loading = () => {
+  // const { data } = useSession();
+  // if (data) return children;
+  return (
+    <div className=" w-screen h-screen bg-slate-100 flex items-center justify-center">
+      <div className="sharingan">
+        <div className="inner-ring">
+          <div className="tomoe"></div>
+          <div className="tomoe"></div>
+          <div className="tomoe"></div>
+          <div className="circle"></div>
         </div>
       </div>
-    );
-  }
-export default Loading  
+    </div>
+  );
+};
+export default Loading;
