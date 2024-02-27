@@ -16,12 +16,11 @@ const RoomItem = ({ name }: IRoom) => {
   const pathName = usePathname();
   const userID = String(data?.user.id);
   const [newMess, setNewMess] = useState<Messenger>();
-
   const fetchNewMess = async () => {
     try {
       const res = await fetchJSON(`/api/newMess/${name.id}`, {
         method: "GET",
-      }); 
+      });
       setNewMess(res);
     } catch (error) {}
   };
@@ -57,16 +56,16 @@ const RoomItem = ({ name }: IRoom) => {
         />
         <div>
           <p className="truncate">{name.name}</p>
-      
-            <p
-              className={
-                newMess?.viewedBy?.includes(userID)
-                  ? "text-[13px] opacity-[0.65] truncate"
-                  : "text-[13px] truncate font-bold "
-              }
-            >
-              {newMess?.messenger}
-            </p>
+
+          <p
+            className={
+              newMess?.viewedBy?.includes(userID)
+                ? "text-[13px] opacity-[0.65] truncate"
+                : "text-[13px] truncate font-bold "
+            }
+          >
+            {newMess?.messenger}
+          </p>
         </div>
       </Link>
     </div>

@@ -1,8 +1,6 @@
-import { useSession } from "next-auth/react";
-
-const Loading = () => {
-  // const { data } = useSession();
-  // if (data) return children;
+import Image from "next/image";
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
+export const LoadingMess = () => {
   return (
     <div className=" w-screen h-screen bg-slate-100 flex items-center justify-center">
       <div className="sharingan">
@@ -16,4 +14,4 @@ const Loading = () => {
     </div>
   );
 };
-export default Loading;
+

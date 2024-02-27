@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import RoomItem from "./RoomItem";
@@ -22,6 +21,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
         method: "GET",
       });
       const data = await res.json();
+      setLoading(false);
       setRoom(data);
     } catch (error) {}
   };
@@ -48,7 +48,7 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
 
   const [showAdd, setShowAdd] = useState(false);
   const [adRoom, setAddRoom] = useState<IRoom>(initAdRoom);
-  const [searchRoom, setSearchRoom] = useState("");
+  const [loading, setLoading] = useState(true);
   const showAddRoom = () => {
     setShowAdd(!showAdd);
   };

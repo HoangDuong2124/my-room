@@ -1,6 +1,5 @@
 "use client";
 
-import Loading from "@/app/loading";
 import { groupMess, sendMess } from "@/interfaces";
 import { fetchJSON } from "@/lib/fetchUrl";
 import { useSession } from "next-auth/react";
@@ -10,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Message from "../Message";
 import { HeaderRoom } from "@/components/Header";
 import { ButtonRoom } from "@/components/Button";
+import { LoadingMess } from "@/components/Loading";
 const MessPage = ({ params }: { params: { id: string } }) => {
   const { data } = useSession();
   const pathName = usePathname();
@@ -91,7 +91,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
   }, [params.id]);
 
   return loading ? (
-    <Loading></Loading>
+    <LoadingMess/>
   ) : (
     <div className="w-[75%]  pt-0 relative ">
       <HeaderRoom roomID={roomID.name} />
