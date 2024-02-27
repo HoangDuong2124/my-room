@@ -23,7 +23,7 @@ export default function RootLayout({
       <body>
         <div className="w-full">
           <SessionProvider>
-            <Suspense fallback={<Loading/>}>{children}</Suspense>
+            {children}
           </SessionProvider>
         </div>
       </body>
