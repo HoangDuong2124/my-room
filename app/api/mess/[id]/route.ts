@@ -44,7 +44,7 @@ export async function PUT(
       where: { idRoom: params.id },
     });
     for (const message of messagesInRoom) {
-      if (message!== null) {
+     
         if (!message.viewedBy.includes(JSON.stringify(body))) {
           const updateViewMess = await prisma.messenger.update({
             where: { id: message.id },
@@ -52,7 +52,6 @@ export async function PUT(
           });
           return NextResponse.json(updateViewMess);
         }
-      }
     }
     return NextResponse.json(messagesInRoom);
   } catch (error) {

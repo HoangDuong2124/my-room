@@ -6,6 +6,7 @@ import Image from "next/image";
 import { IRoom, Messenger, User, groupMess, sendMess } from "@/interfaces";
 import Pusher from "pusher-js";
 import { usePathname } from "next/navigation";
+import { fetchJSON } from "@/lib/fetchUrl";
 const MessPage = ({ params }: { params: { id: string } }) => {
   const { data } = useSession();
   const pathName = usePathname();
@@ -27,10 +28,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
       });
       const data = await res.json();
       setRoomID(data);
-    } catch (error) {
-      
-    }
-    
+    } catch (error) {}
   };
 
   const fetchAllMess = async () => {
@@ -39,11 +37,8 @@ const MessPage = ({ params }: { params: { id: string } }) => {
         method: "GET",
       });
       const data = await res.json();
-     if(data) setMessenger(data);
-    } catch (error) {
-      
-    }
-   
+      if (data) setMessenger(data);
+    } catch (error) {}
   };
 
   const fetchSendMess = async (data: sendMess) => {
@@ -60,14 +55,11 @@ const MessPage = ({ params }: { params: { id: string } }) => {
 
   const fetchUpdateViewMess = async () => {
     try {
-      const res = await fetch(`/api/mess/${lastPathName}`, {
+      const res = await fetchJSON(`/api/mess/${lastPathName}`, {
         method: "PUT",
         body: String(data?.user.id),
       });
-    } catch (error) {
-      
-    }
-  
+    } catch (error) {}
   };
 
   const [messenger, setMessenger] = useState<groupMess[]>([]);
@@ -116,19 +108,17 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     };
   }, [params.id]);
 
-
   useEffect(() => {
     fetchAllMess();
     fetchRoomID();
   }, []);
-    const scroll = document.querySelector(".chat-scroll")
-    if(scroll){
-      scroll.scrollTop = scroll.scrollHeight
+    const scroll = document.querySelector(".chat-scroll");
+    if (scroll) {
+      scroll.scrollTop = scroll.scrollHeight;
     }
-
-  // useEffect(() => {
-  //   fetchUpdateViewMess();
-  // }, [pathName]);
+  useEffect(() => {
+    fetchUpdateViewMess();
+  }, [params.id]);
 
   return (
     <div className="w-[75%]  pt-0 relative ">
