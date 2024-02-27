@@ -33,7 +33,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
 
   const fetchAllMess = async () => {
     try {
-      const res = await fetch(`/api/mess/${params.id}`, {
+      const res = await fetchJSON(`/api/mess/${params.id}`, {
         method: "GET",
       });
       const data = await res.json();
@@ -112,10 +112,13 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     fetchAllMess();
     fetchRoomID();
   }, []);
+
+  useEffect(() => {
     const scroll = document.querySelector(".chat-scroll");
     if (scroll) {
       scroll.scrollTop = scroll.scrollHeight;
     }
+  }, []);
   useEffect(() => {
     fetchUpdateViewMess();
   }, [params.id]);
