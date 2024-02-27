@@ -36,8 +36,7 @@ const MessPage = ({ params }: { params: { id: string } }) => {
       const res = await fetchJSON(`/api/mess/${params.id}`, {
         method: "GET",
       });
-      const data = await res.json();
-      if (data) setMessenger(data);
+     setMessenger(res);
     } catch (error) {}
   };
 
