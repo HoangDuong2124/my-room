@@ -43,7 +43,7 @@ const RoomItem = ({ name }: IRoom) => {
 
   useEffect(() => {
     fetchNewMess();
-  }, []);
+  }, [pathName]);
 
   return (
     <div className=" p-2 hover:bg-[Gainsboro]">
