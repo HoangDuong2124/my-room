@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import SidebarPage from "./Sidebar";
 import { IRoom, Messenger, User, clickRoom } from "@/interfaces";
 import Pusher from "pusher-js";
 import { fetchJSON } from "@/lib/fetchUrl";
-
 export default function RootLayout({
   children,
 }: {
@@ -30,20 +29,19 @@ export default function RootLayout({
       const res = await fetchJSON("/api/room", {
         method: "GET",
       });
-    
-       setRoom(res);
-    } catch (error) {
-    }
+
+      setRoom(res);
+    } catch (error) {}
   };
   useEffect(() => {
     fetchRoom();
   }, []);
   return (
     <>
-      <div className="flex w-full">
-        <SidebarPage room={room} setRoom={setRoom} />
-        {children}
-      </div>
+        <div className="flex w-full">
+          <SidebarPage room={room} setRoom={setRoom} />
+          {children}
+        </div>
     </>
   );
 }
