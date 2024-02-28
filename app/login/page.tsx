@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation"
 
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
-
+    const [error,setError] = useState(false)
     const handleLogin = async (e:any) => {
       e.preventDefault();
   
@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation"
       });
   
       if (result?.error) {
-        console.error('Đăng nhập không thành công:', result.error);
+        setError(true)
       } else {
         router.push("/room");
       }
@@ -41,6 +41,9 @@ import { useRouter } from "next/navigation"
                             text-bold tracking-[1px] uppercase  mb-5 ">
                     Login Room
                 </h1>
+                {
+                  error?<p className="text-red-700 text-center font-bold">Tài khoản hoặc mật khẩu sai!</p>:<></>
+                }
                 <form onSubmit={handleLogin}>
                 <div className=" ">
                     <input
