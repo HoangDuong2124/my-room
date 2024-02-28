@@ -55,7 +55,6 @@ export async function PUT(
     }
     return NextResponse.json(messagesInRoom);
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Failed" }, { status: 400 });
   }
 }
