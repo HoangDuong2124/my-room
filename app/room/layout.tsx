@@ -1,15 +1,12 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import SidebarPage from "./Sidebar";
-import { IRoom, Messenger, User, clickRoom } from "@/interfaces";
-import Pusher from "pusher-js";
-import { fetchJSON } from "@/lib/fetchUrl";
+import { IRoom, Messenger, Room, User, clickRoom } from "@/interfaces";
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [room, setRoom] = useState<IRoom[]>([]);
   const [user, setUser] = useState<User[]>([
     {
       id: 1,
@@ -24,24 +21,10 @@ export default function RootLayout({
       password: "123456",
     },
   ]);
-  const [loading, setLoading] = useState(true);
-  const fetchRoom = async () => {
-    try {
-      const res = await fetchJSON("/api/room", {
-        method: "GET",
-      });
-
-      setRoom(res);
-      setLoading(false);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    fetchRoom();
-  }, []);
   return (
     <>
       <div className="flex w-full">
-        <SidebarPage room={room} setRoom={setRoom} loading={loading} />
+        <SidebarPage/>
         {children}
       </div>
     </>
