@@ -24,6 +24,7 @@ export default function RootLayout({
       password: "123456",
     },
   ]);
+  const [loading, setLoading] = useState(true);
   const fetchRoom = async () => {
     try {
       const res = await fetchJSON("/api/room", {
@@ -31,6 +32,7 @@ export default function RootLayout({
       });
 
       setRoom(res);
+      setLoading(false);
     } catch (error) {}
   };
   useEffect(() => {
@@ -38,10 +40,10 @@ export default function RootLayout({
   }, []);
   return (
     <>
-        <div className="flex w-full">
-          <SidebarPage room={room} setRoom={setRoom} />
-          {children}
-        </div>
+      <div className="flex w-full">
+        <SidebarPage room={room} setRoom={setRoom} loading={loading} />
+        {children}
+      </div>
     </>
   );
 }

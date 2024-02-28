@@ -50,7 +50,6 @@ const MessPage = ({ params }: { params: { id: string } }) => {
     name: "",
   });
   const [loading, setLoading] = useState(true);
-
   const container = useRef<HTMLDivElement>(null);
   const Scroll = () => {
     if (!container.current) return;

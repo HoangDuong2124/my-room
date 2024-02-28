@@ -24,27 +24,26 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-} 
+}
 /* width */
 ::-webkit-scrollbar {
   width: 8px;
-
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #865ac9; 
+  background: #865ac9;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #37318f; 
+  background: #37318f;
 }
 
 /* Sharingan Loading */
@@ -114,7 +113,7 @@ body {
   transform: rotate(120deg);
 }
 
-.sharingan .circle{
+.sharingan .circle {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -127,7 +126,7 @@ body {
   0% {
     transform: rotate(0deg);
   }
- 
+
   100% {
     transform: rotate(720deg);
   }
@@ -145,3 +144,95 @@ body {
   }
 }
 
+/* LOADING ROOM */
+.wrapper {
+  width: 200px;
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle2 {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #f0f0f0f0;
+  left: 15%;
+  transform-origin: 50%;
+  animation: circle7124 0.5s alternate infinite ease;
+}
+
+@keyframes circle7124 {
+  0% {
+    top: 60px;
+    height: 5px;
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(1.7);
+  }
+
+  40% {
+    height: 20px;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+
+  100% {
+    top: 0%;
+  }
+}
+
+.circle2:nth-child(2) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.circle2:nth-child(3) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}
+
+.shadow2 {
+  width: 20px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  top: 62px;
+  transform-origin: 50%;
+  z-index: -1;
+  left: 15%;
+  filter: blur(1px);
+  animation: shadow046 0.5s alternate infinite ease;
+}
+
+@keyframes shadow046 {
+  0% {
+    transform: scaleX(1.5);
+  }
+
+  40% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.4;
+  }
+}
+
+.shadow2:nth-child(4) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.shadow2:nth-child(5) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}

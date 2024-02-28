@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import RoomItem from "./RoomItem";
 import { IRoom } from "@/interfaces";
+import { LoadingRoom } from "@/components/Loading";
+import { fetchJSON } from "@/lib/fetchUrl";
 interface ISidebar {
   room: IRoom[];
   setRoom: React.Dispatch<React.SetStateAction<IRoom[]>>;
+  loading:boolean
 }
-const SidebarPage = ({ room, setRoom }: ISidebar) => {
+const SidebarPage = ({ room, setRoom,loading }: ISidebar) => {
   const { data } = useSession();
   const randomID = () => Math.random().toString(36).slice(2);
   const initAdRoom = {
@@ -17,12 +20,10 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
   };
   const fetchRoom = async () => {
     try {
-      const res = await fetch("/api/room", {
+      const res = await fetchJSON("/api/room", {
         method: "GET",
       });
-      const data = await res.json();
-      setLoading(false);
-      setRoom(data);
+      setRoom(res);
     } catch (error) {}
   };
   const fetchAddRoom = async (data: IRoom) => {
@@ -48,7 +49,6 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
 
   const [showAdd, setShowAdd] = useState(false);
   const [adRoom, setAddRoom] = useState<IRoom>(initAdRoom);
-  const [loading, setLoading] = useState(true);
   const showAddRoom = () => {
     setShowAdd(!showAdd);
   };
@@ -160,9 +160,15 @@ const SidebarPage = ({ room, setRoom }: ISidebar) => {
           </div>
         )}
         <div className="w-full h-[calc(100vh-125px)] overflow-y-auto">
-          {room.map((item) => (
-            <RoomItem key={item.id} name={item} />
-          ))}
+          {loading ? (
+            <LoadingRoom />
+          ) : (
+            <>
+              {room.map((item) => (
+                <RoomItem key={item.id} name={item} />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </>
