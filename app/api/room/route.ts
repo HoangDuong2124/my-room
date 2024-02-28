@@ -19,13 +19,10 @@ export async function GET(req: Request) {
           take: 1,
         },
       },
-      //   orderBy:{
-      //     "messengers.sentAt":"desc"
-      //   }  ,
     });
     return NextResponse.json(res);
   } catch (error) {
-    return NextResponse.json({ message: "Failed" }, { status: 400 });
+    return NextResponse.json({ message: error }, { status: 400 });
   }
 }
 export async function POST(req: Request) {
