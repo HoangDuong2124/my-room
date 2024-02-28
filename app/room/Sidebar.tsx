@@ -20,10 +20,11 @@ const SidebarPage = ({ room, setRoom,loading }: ISidebar) => {
   };
   const fetchRoom = async () => {
     try {
-      const res = await fetchJSON("/api/room", {
+      const res = await fetch("/api/room", {
         method: "GET",
       });
-      setRoom(res);
+      const data = await res.json()
+      setRoom(data);
     } catch (error) {}
   };
   const fetchAddRoom = async (data: IRoom) => {
