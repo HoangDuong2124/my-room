@@ -1,13 +1,17 @@
 export interface IRoom {
     id: string
     name: string
-    // messengers: [
-    //     {
-    //         id:number
-    //         messenger:string
-    //         sentAt:Date
-    //     }
-    // ]
+}
+export interface Room {
+    id: string
+    name: string
+    messengers: [
+        {
+            id:number
+            messenger:string
+            sentAt:Date
+        }
+    ]
 }
 export interface User {
     id: number

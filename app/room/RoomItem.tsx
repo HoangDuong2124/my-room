@@ -3,15 +3,15 @@ import Image from "next/image";
 import { room } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Messenger } from "@/interfaces";
+import { IRoom, Messenger, Room } from "@/interfaces";
 import Pusher from "pusher-js";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { fetchJSON } from "@/lib/fetchUrl";
-interface IRoom {
+interface IRoomm {
   name: room;
 }
-const RoomItem = ({ name }: IRoom) => {
+const RoomItem = ({ name }: IRoomm) => {
   const { data } = useSession();
   const pathName = usePathname();
   const userID = String(data?.user.id);
@@ -43,7 +43,6 @@ const RoomItem = ({ name }: IRoom) => {
   useEffect(() => {
     fetchNewMess();
   }, [pathName]);
-
   return (
     <div className=" p-2 hover:bg-[Gainsboro]">
       <Link href={`/room/${name.id}`} className="flex items-center w-full ">
