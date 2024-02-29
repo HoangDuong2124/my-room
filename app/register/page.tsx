@@ -76,7 +76,7 @@ const RegisterPage = () => {
                         {alert.status === 'success' ? '✅' : '❌'} {alert.message}
                     </div>
                 }
-                <form>
+                <form onSubmit={register}>
                     <div className=" ">
                         <input
                             className="w-full text-white bg-transparent p-3 mb-3
@@ -124,8 +124,7 @@ const RegisterPage = () => {
                         />
                     </div>
                     <button className=" p-2 bg-[#f0bcb4] text-white hover:bg-[#8b5c7e] transition-all duration-500"
-                        // type="submit"
-                    onClick={register}
+                     type="submit"
                     >
                         Đăng kí
                     </button>
