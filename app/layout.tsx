@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="w-full">
+        <div className="w-full overflow-hidden">
           <SessionProvider>
             {children}
           </SessionProvider>
