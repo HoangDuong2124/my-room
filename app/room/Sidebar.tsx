@@ -126,10 +126,10 @@ const SidebarPage = () => {
           </button>
         </div>
         {showAdd && (
-          <div className="w-full h-auto flex items-center justify-center">
+          <div className="w-full h-[25px] grid grid-cols-4">
             <input
               type="text"
-              className="pl-2 border outline-1 outline-red-400"
+              className="col-span-3 pl-2 border outline-1 outline-red-400"
               placeholder="Nhập tên room"
               onChange={(e) =>
                 setAddRoom((prev) => {
